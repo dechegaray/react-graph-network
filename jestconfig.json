@@ -7,5 +7,17 @@
   "testEnvironment": "jsdom",
   "setupFilesAfterEnv": [
     "./src/setupTests.ts"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    }
+  },
+  "reporters": [
+    "default",
+    ["jest-junit", { "outputDirectory": "./test-results" }]
   ]
 }
