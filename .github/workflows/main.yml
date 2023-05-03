@@ -1,0 +1,27 @@
+name: Build and Test
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+
+    - name: Verify linters and formatters
+      run: yarn lint && yarn format:check
+
+    - name: Verify TypeScript types
+      run: yarn typecheck
+
+    - name: Run unit tests
+      run: yarn test:unit
+
+    - name: Build project
+      run: yarn build
