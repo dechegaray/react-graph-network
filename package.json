@@ -3,6 +3,7 @@
     "start": "webpack serve --config webpack.config.js --mode development",
     "build": "webpack --config webpack.config.js --mode production",
     "test": "jest --config jestconfig.json --watch",
+    "test:ci": "jest --config jestconfig.json",
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\" --fix",
     "format": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
     "typecheck": "tsc --noEmit --declaration false"

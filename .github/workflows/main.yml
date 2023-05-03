@@ -23,7 +23,7 @@ jobs:
 
     - name: Run formatters
       run: yarn format
-      
+
     - name: Verify TypeScript types
       run: yarn typecheck
 
@@ -31,4 +31,4 @@ jobs:
       run: yarn build
 
     - name: Run tests
-      run: yarn test
+      run: yarn test:ci
