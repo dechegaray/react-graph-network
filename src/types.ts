@@ -1,8 +1,4 @@
-import type {
-  forceSimulation,
-  SimulationLinkDatum,
-  SimulationNodeDatum
-} from 'd3-force'
+import type { forceSimulation, SimulationLinkDatum, SimulationNodeDatum } from 'd3-force'
 import type { ReactElement } from 'react'
 import type { BaseType, Selection } from 'd3-selection'
 
@@ -14,8 +10,7 @@ export interface BaseNode extends SimulationNodeDatum {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface BaseLink<NodeDatum extends BaseNode>
-  extends SimulationLinkDatum<NodeDatum> {}
+export interface BaseLink<NodeDatum extends BaseNode> extends SimulationLinkDatum<NodeDatum> {}
 
 export interface Data<Node extends BaseNode, Link extends BaseLink<Node>> {
   nodes: Node[]
@@ -33,18 +28,12 @@ export interface DetailsComponentProps<Node extends BaseNode> {
   unselectNode(): void
 }
 
-export interface LinkComponentProps<
-  Node extends BaseNode,
-  Link extends BaseLink<Node>
-> {
+export interface LinkComponentProps<Node extends BaseNode, Link extends BaseLink<Node>> {
   link: Link
   className: string
 }
 
-export interface GraphProps<
-  Node extends BaseNode = BaseNode,
-  Link extends BaseLink<Node> = BaseLink<Node>
-> {
+export interface GraphProps<Node extends BaseNode = BaseNode, Link extends BaseLink<Node> = BaseLink<Node>> {
   data: Data<Node, Link>
   focusNodeBranch: NodeId
 
@@ -59,25 +48,18 @@ export interface GraphProps<
   DetailsComponent?(props: DetailsComponentProps<Node>): ReactElement
 }
 
-export type NetworkGraphProps<
-  Node extends BaseNode = BaseNode,
-  Link extends BaseLink<Node> = BaseLink<Node>
-> = Omit<GraphProps<Node, Link>, 'focusNodeBranch' | 'selectNode'>
+export type NetworkGraphProps<Node extends BaseNode = BaseNode, Link extends BaseLink<Node> = BaseLink<Node>> = Omit<
+  GraphProps<Node, Link>,
+  'focusNodeBranch' | 'selectNode'
+>
 
-export const isNodeDatum = (
-  subject: BaseLink<BaseNode>['source']
-): subject is BaseNode => {
+export const isNodeDatum = (subject: BaseLink<BaseNode>['source']): subject is BaseNode => {
   return (subject as BaseNode).id !== undefined
 }
 
 export type Simulation = ReturnType<typeof forceSimulation>
 
-export type SelectedNode<GElement extends BaseType = BaseType> = Selection<
-  GElement,
-  BaseNode,
-  SVGSVGElement,
-  unknown
->
+export type SelectedNode<GElement extends BaseType = BaseType> = Selection<GElement, BaseNode, SVGSVGElement, unknown>
 
 export type SelectedLink<GElement extends BaseType = BaseType> = Selection<
   GElement,

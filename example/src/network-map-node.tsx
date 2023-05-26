@@ -4,7 +4,7 @@ export const NetworkGraphNode = (props: any) => {
   return (
     <g
       style={{
-        cursor: 'pointer'
+        cursor: 'pointer',
       }}
       onClick={() => alert(`${props.node.label} was clicked`)}
     >

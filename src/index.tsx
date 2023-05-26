@@ -6,7 +6,7 @@ import { BaseNode, BaseLink, NetworkGraphProps } from './types'
 
 type GraphWithZoomProps<
   Node extends BaseNode = BaseNode,
-  Link extends BaseLink<Node> = BaseLink<Node>
+  Link extends BaseLink<Node> = BaseLink<Node>,
 > = NetworkGraphProps<Node, Link> &
   ZoomChildrenProps & {
     centerOnNodeClick?: boolean
@@ -30,7 +30,7 @@ const GraphWithZoom = <Node extends BaseNode, Link extends BaseLink<Node>>({
 
     zoom.setTranslate({
       translateX: width / 2 - (node.x || 0) * scale,
-      translateY: height / 2 - (node.y || 0) * scale
+      translateY: height / 2 - (node.y || 0) * scale,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -100,23 +100,13 @@ const GraphWithZoom = <Node extends BaseNode, Link extends BaseLink<Node>>({
   )
 }
 
-export const NetworkGraph = <
-  Node extends BaseNode = BaseNode,
-  Link extends BaseLink<Node> = BaseLink<Node>
->(
-  props: NetworkGraphProps<Node, Link>
+export const NetworkGraph = <Node extends BaseNode = BaseNode, Link extends BaseLink<Node> = BaseLink<Node>>(
+  props: NetworkGraphProps<Node, Link>,
 ) => {
   return (
     <Zoom className='network-graph' data-testid='network-graph'>
       {({ zoom, height, width }) => {
-        return (
-          <GraphWithZoom<Node, Link>
-            {...props}
-            zoom={zoom}
-            width={width}
-            height={height}
-          />
-        )
+        return <GraphWithZoom<Node, Link> {...props} zoom={zoom} width={width} height={height} />
       }}
     </Zoom>
   )

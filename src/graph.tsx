@@ -1,9 +1,4 @@
-import {
-  forceLink,
-  forceCenter,
-  forceManyBody,
-  forceSimulation
-} from 'd3-force'
+import { forceLink, forceCenter, forceManyBody, forceSimulation } from 'd3-force'
 import { select } from 'd3-selection'
 import React, { useEffect } from 'react'
 
@@ -27,7 +22,7 @@ export const Graph = <Node extends BaseNode, Link extends BaseLink<Node>>({
   id = 'GraphTree_container',
   NodeComponent = DefaultNode,
   LinkComponent = DefaultLink,
-  selectNode
+  selectNode,
 }: GraphProps<Node, Link>) => {
   useEffect(() => {
     if (!data) return
@@ -43,32 +38,24 @@ export const Graph = <Node extends BaseNode, Link extends BaseLink<Node>>({
         'link',
         forceLink<Node, Link>()
           .id((d) => d.id)
-          .links(data.links)
+          .links(data.links),
       )
 
       // This adds repulsion between nodes. Play with the -400 for the repulsion strength
       .force(
         'charge',
-        forceManyBody<Node>().strength((node) => node.gForce ?? -nodeDistance)
+        forceManyBody<Node>().strength((node) => node.gForce ?? -nodeDistance),
       )
 
       // This force attracts nodes to the center of the svg area
-      .force(
-        'center',
-        forceCenter(
-          parentElement.clientWidth / 2,
-          parentElement.clientHeight / 2
-        )
-      )
+      .force('center', forceCenter(parentElement.clientWidth / 2, parentElement.clientHeight / 2))
 
       // adds styling attributes to the nodes/links and translates their position
       .on('tick', () => tick(node, link))
 
     const findNodeBranch = findNodeBranchFactory(data.links)
 
-    const focusNodeBranchIds = focusNodeBranch
-      ? findNodeBranch(focusNodeBranch)
-      : []
+    const focusNodeBranchIds = focusNodeBranch ? findNodeBranch(focusNodeBranch) : []
 
     if (focusNodeBranchIds.length) {
       focusNodes(focusNodeBranchIds, { node, link, hoverOpacity })
@@ -81,19 +68,11 @@ export const Graph = <Node extends BaseNode, Link extends BaseLink<Node>>({
       node,
       link,
       hoverOpacity,
-      focusNodeBranchIds
+      focusNodeBranchIds,
     })
 
     addDrag(node as SelectedNode<Element>, simulation, enableDrag, pullIn)
-  }, [
-    id,
-    data,
-    pullIn,
-    enableDrag,
-    hoverOpacity,
-    focusNodeBranch,
-    nodeDistance
-  ])
+  }, [id, data, pullIn, enableDrag, hoverOpacity, focusNodeBranch, nodeDistance])
 
   const isFirstNodeSimulated = data?.nodes?.[0].id === undefined
 
@@ -104,19 +83,11 @@ export const Graph = <Node extends BaseNode, Link extends BaseLink<Node>>({
   return (
     <React.Fragment>
       {data?.links.map((link, i) => (
-        <LinkComponent
-          key={`link-${link.index || i}`}
-          link={link}
-          className='_graphLine'
-        />
+        <LinkComponent key={`link-${link.index || i}`} link={link} className='_graphLine' />
       ))}
       {data?.nodes.map((node) => (
         <g key={`node-${node.id}`} className='_graphNode'>
-          <NodeComponent
-            node={node}
-            isActive={focusNodeBranch === node.id}
-            selectNode={() => selectNode(node)}
-          />
+          <NodeComponent node={node} isActive={focusNodeBranch === node.id} selectNode={() => selectNode(node)} />
         </g>
       ))}
     </React.Fragment>

@@ -17,13 +17,7 @@ export const NavigationControls = ({ zoom }: NavigationControlsProps) => {
 
   return (
     <div className='navigation-controls'>
-      <button
-        type='button'
-        title='Zoom In'
-        aria-label='zoom-in'
-        className='btn btn-zoom'
-        onClick={zoomInHandler}
-      >
+      <button type='button' title='Zoom In' aria-label='zoom-in' className='btn btn-zoom' onClick={zoomInHandler}>
         +
       </button>
       <button

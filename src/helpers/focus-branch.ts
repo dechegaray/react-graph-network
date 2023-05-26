@@ -9,10 +9,7 @@ interface FocusBranchOptions {
   link: SelectedLink
 }
 
-export const focusNodes = (
-  ids: NodeId[],
-  { node, link, hoverOpacity = 1 }: FocusBranchOptions
-) => {
+export const focusNodes = (ids: NodeId[], { node, link, hoverOpacity = 1 }: FocusBranchOptions) => {
   const branchIds = new Set(ids)
 
   node.style('opacity', (i) => (branchIds.has(i.id) ? '1' : hoverOpacity))
@@ -30,7 +27,7 @@ export const focusClear = ({ node, link }: FocusBranchOptions) => {
 
 export const addHoverFocus = (
   findBranch: ReturnType<typeof findNodeBranchFactory>,
-  { node, link, hoverOpacity, focusNodeBranchIds }: FocusBranchOptions
+  { node, link, hoverOpacity, focusNodeBranchIds }: FocusBranchOptions,
 ) => {
   node
     .on('mouseover', (_, item) => {

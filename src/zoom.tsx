@@ -37,7 +37,7 @@ export const Zoom = ({ children, ...rest }: ZoomProps) => {
           translateX,
           translateY,
           skewX: 0,
-          skewY: 0
+          skewY: 0,
         }
 
         return (

@@ -11,14 +11,14 @@ const data = {
     { id: 'node2', label: 'Node 2' },
     { id: 'node3', label: 'Node 3' },
     { id: 'node4', label: 'Node 4' },
-    { id: 'node5', label: 'Node 5' }
+    { id: 'node5', label: 'Node 5' },
   ],
   links: [
     { source: 'node1', target: 'node2' },
     { source: 'node1', target: 'node3' },
     { source: 'node1', target: 'node4' },
-    { source: 'node1', target: 'node5' }
-  ]
+    { source: 'node1', target: 'node5' },
+  ],
 }
 
 const App = () => {

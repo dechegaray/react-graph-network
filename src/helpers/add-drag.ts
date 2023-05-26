@@ -8,12 +8,7 @@ interface DragEvent extends BaseNode {
   subject: SimulationNodeDatum
 }
 
-export const addDrag = (
-  node: SelectedNode<Element>,
-  simulation: Simulation,
-  enableDrag: boolean,
-  pullIn: boolean
-) => {
+export const addDrag = (node: SelectedNode<Element>, simulation: Simulation, enableDrag: boolean, pullIn: boolean) => {
   if (enableDrag) {
     node.call(
       drag()
@@ -33,7 +28,7 @@ export const addDrag = (
             event.subject.fx = null
             event.subject.fy = null
           }
-        })
+        }),
     )
   } else {
     node.call(
@@ -41,7 +36,7 @@ export const addDrag = (
         .subject((_, event: DragEvent) => simulation.find(event.x, event.y))
         .on('start', null)
         .on('drag', null)
-        .on('end', null)
+        .on('end', null),
     )
   }
 

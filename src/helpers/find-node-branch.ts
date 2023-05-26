@@ -1,10 +1,7 @@
 import { BaseLink, BaseNode, NodeId } from '../types'
 
-export const findNodeBranchFactory = <
-  Node extends BaseNode,
-  Link extends BaseLink<Node>
->(
-  links: Link[]
+export const findNodeBranchFactory = <Node extends BaseNode, Link extends BaseLink<Node>>(
+  links: Link[],
 ): ((target: NodeId) => NodeId[]) => {
   const relationsSource = new Map<NodeId, Set<NodeId>>()
   const relationsTarget = new Map<NodeId, Set<NodeId>>()
@@ -22,11 +19,7 @@ export const findNodeBranchFactory = <
     relationsSource.set(source.id, sourcetSet)
   }
 
-  const findBranch = (
-    source: Map<NodeId, Set<NodeId>>,
-    prev: NodeId[],
-    target: NodeId
-  ) => {
+  const findBranch = (source: Map<NodeId, Set<NodeId>>, prev: NodeId[], target: NodeId) => {
     const items = source.get(target)
     if (!items) return prev
 
