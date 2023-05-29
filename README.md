@@ -7,21 +7,37 @@
 ## Install
 
 ```bash
-npm install --save network-graph
+yarn install network-graph
 ```
 
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React from 'react'
+import { NetworkGraph } from 'network-graph'
 
-import MyComponent from 'network-graph'
-import 'network-graph/dist/index.css'
+const viewportHeight = 300
+const exampleData = {
+  nodes: [
+    { id: 'node1', label: 'Node 1' },
+    { id: 'node2', label: 'Node 2' },
+    { id: 'node3', label: 'Node 3' },
+  ],
+  links: [
+    { source: 'node1', target: 'node2' },
+    { source: 'node1', target: 'node3' },
+  ],
+}
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+function App() {
+  return (
+    <div style={{ height: viewportHeight }}>
+      <NetworkGraph
+        id='network-graph'
+        data={exampleData}
+      />
+    </div>
+  )
 }
 ```
 

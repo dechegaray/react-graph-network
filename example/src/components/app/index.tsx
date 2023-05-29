@@ -2,8 +2,8 @@ import React from 'react'
 
 import { NetworkGraph } from 'network-graph'
 
-import { NetworkMapLine } from './network-map-line'
-import { NetworkGraphNode } from './network-map-node'
+import { NetworkMapLine } from './graph-elements/network-map-line'
+import { NetworkGraphNode } from './graph-elements/network-map-node'
 
 const data = {
   nodes: [
