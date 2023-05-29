@@ -14,7 +14,6 @@
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
-    "prepare": "run-s build",
     "test": "jest --config jestconfig.json --watch",
     "test:ci": "jest --config jestconfig.json",
     "test:coverage": "jest --config jestconfig.json --coverage",
