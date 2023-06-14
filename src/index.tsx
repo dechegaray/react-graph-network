@@ -4,6 +4,21 @@ import { Graph } from './graph'
 import { Zoom, ZoomChildrenProps } from './zoom'
 import { BaseNode, BaseLink, NetworkGraphProps } from './types'
 
+export {
+  NodeId,
+  BaseNode,
+  BaseLink,
+  Data,
+  NodeComponentProps,
+  DetailsComponentProps,
+  LinkComponentProps,
+  GraphProps,
+  NetworkGraphProps,
+  Simulation,
+  SelectedNode,
+  SelectedLink,
+} from './types'
+
 type GraphWithZoomProps<
   Node extends BaseNode = BaseNode,
   Link extends BaseLink<Node> = BaseLink<Node>,

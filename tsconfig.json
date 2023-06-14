@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "outDir": "dist",
+    "rootDir": "src",
     "module": "esnext",
     "target": "ES6",
     "lib": ["DOM", "ES6", "DOM.Iterable", "ScriptHost", "ES2016.Array.Include", "esnext"],
     "types": ["node", "jest"],
     "moduleResolution": "node",
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
     "strict": false,
     "noImplicitAny": true,
     "skipLibCheck": true,
