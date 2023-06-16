@@ -7,14 +7,14 @@
 ## Install
 
 ```bash
-yarn install network-graph
+yarn install @dechegaray/react-graph-network
 ```
 
 ## Usage
 
 ```tsx
 import React from 'react'
-import { NetworkGraph } from 'network-graph'
+import { NetworkGraph } from '@dechegaray/react-graph-network'
 
 const viewportHeight = 300
 const exampleData = {

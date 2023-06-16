@@ -13,22 +13,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
 
-    - name: Run linters
-      run: yarn lint
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
 
-    - name: Run formatters
-      run: yarn format
+      - name: Run linters
+        run: yarn lint
 
-    - name: Verify TypeScript types
-      run: yarn typecheck
+      - name: Run formatters
+        run: yarn format
 
-    - name: Build project
-      run: yarn build
+      - name: Verify TypeScript types
+        run: yarn typecheck
 
-    - name: Run test coverage
-      run: yarn test:coverage
+      - name: Build project
+        run: yarn build
+
+      - name: Run test coverage
+        run: yarn test:coverage
