@@ -32,10 +32,7 @@ const exampleData = {
 function App() {
   return (
     <div style={{ height: viewportHeight }}>
-      <NetworkGraph
-        id='network-graph'
-        data={exampleData}
-      />
+      <NetworkGraph id='network-graph' data={exampleData} />
     </div>
   )
 }
