@@ -7,14 +7,14 @@
 ## Install
 
 ```bash
-yarn install network-graph
+yarn install @dechegaray/react-graph-network
 ```
 
 ## Usage
 
 ```tsx
 import React from 'react'
-import { NetworkGraph } from 'network-graph'
+import { NetworkGraph } from '@dechegaray/react-graph-network'
 
 const viewportHeight = 300
 const exampleData = {
@@ -32,10 +32,7 @@ const exampleData = {
 function App() {
   return (
     <div style={{ height: viewportHeight }}>
-      <NetworkGraph
-        id='network-graph'
-        data={exampleData}
-      />
+      <NetworkGraph id='network-graph' data={exampleData} />
     </div>
   )
 }
