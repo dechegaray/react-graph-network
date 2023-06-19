@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-yarn install network-graph
+npm install network-graph
 ```
 
 ## Usage
