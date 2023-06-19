@@ -119,7 +119,12 @@ export const NetworkGraph = <Node extends BaseNode = BaseNode, Link extends Base
   props: NetworkGraphProps<Node, Link>,
 ) => {
   return (
-    <Zoom className='network-graph' data-testid='network-graph'>
+    <Zoom
+      className='network-graph'
+      data-testid='network-graph'
+      enableZoomButtons={props?.enableZoomButtons}
+      enableMouseWheelZoom={props?.enableMouseWheelZoom}
+    >
       {({ zoom, height, width }) => {
         return <GraphWithZoom<Node, Link> {...props} zoom={zoom} width={width} height={height} />
       }}

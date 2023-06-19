@@ -40,6 +40,8 @@ export interface GraphProps<Node extends BaseNode = BaseNode, Link extends BaseL
   id?: string
   pullIn?: boolean
   enableDrag?: boolean
+  enableZoomButtons?: boolean
+  enableMouseWheelZoom?: boolean
   nodeDistance?: number
   hoverOpacity?: number
   selectNode?(node: Node): void

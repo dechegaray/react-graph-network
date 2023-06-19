@@ -20,9 +20,20 @@ export interface ZoomChildrenProps {
 interface ZoomProps {
   children(props: ZoomChildrenProps): ReactElement
   className: string
+  enableZoomButtons: boolean
+  enableMouseWheelZoom: boolean
 }
 
-export const Zoom = ({ children, ...rest }: ZoomProps) => {
+export const Zoom = ({ children, enableZoomButtons = true, enableMouseWheelZoom = true, ...rest }: ZoomProps) => {
+  const handleMouseWheel = (event: React.WheelEvent<HTMLDivElement>, zoom: ZoomState) => {
+    if (!enableMouseWheelZoom) return
+    if (event.deltaY > 0) {
+      zoom.scale({ scaleX: 1.25, scaleY: 1.25 })
+    } else {
+      zoom.scale({ scaleX: 0.75, scaleY: 0.75 })
+    }
+  }
+
   return (
     <ParentSize {...rest}>
       {({ width, height }) => {
@@ -51,10 +62,10 @@ export const Zoom = ({ children, ...rest }: ZoomProps) => {
             initialTransformMatrix={initialTransform}
           >
             {(zoom) => (
-              <React.Fragment>
+              <div onWheel={(event) => handleMouseWheel(event, zoom)}>
                 {children({ zoom, height, width })}
-                <NavigationControls zoom={zoom} />
-              </React.Fragment>
+                {enableZoomButtons && <NavigationControls zoom={zoom} />}
+              </div>
             )}
           </VXZoom>
         )
