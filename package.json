@@ -1,6 +1,6 @@
 {
   "name": "@dechegaray/react-graph-network",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Custom npm package designed for convenient and efficient network graph visualization. This package utilizes the powerful d3 (Data-Driven Documents) library for creating and rendering network graph representations. With network-graph, you can quickly build a graph of your network using a simple and intuitive API. The package provides capabilities for adding nodes, connections, and configuring their parameters such as colors, sizes, and styles. Furthermore, network-graph offers various manipulation options for interacting with the graph, including node dragging, zooming, selection, and repositioning. By leveraging the d3 library, network-graph ensures high performance and flexibility in working with graphical elements. It is an ideal choice for developing web applications that require visualizing network data. Overall, network-graph is a powerful and user-friendly tool for constructing network graphs, allowing you to effectively present your data and explore it visually.",
   "author": "",
   "license": "MIT",
