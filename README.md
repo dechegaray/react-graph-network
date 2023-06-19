@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-yarn install @dechegaray/react-graph-network
+npm install @dechegaray/react-graph-network
 ```
 
 ## Usage

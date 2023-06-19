@@ -21,19 +21,19 @@ jobs:
           node-version: '16.x'
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Run linters
-        run: yarn lint
+        run: npm run lint
 
       - name: Run formatters
-        run: yarn format
+        run: npm run format
 
       - name: Verify TypeScript types
-        run: yarn typecheck
+        run: npm run typecheck
 
       - name: Build project
-        run: yarn build
+        run: npm run build
 
       - name: Run test coverage
-        run: yarn test:coverage
+        run: npm run test:coverage
