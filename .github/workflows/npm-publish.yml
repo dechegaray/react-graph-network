@@ -13,19 +13,19 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install dependencies
-      run: yarn install --frozen-lockfile
+      run: npm ci
 
     - name: Verify linters and formatters
-      run: yarn lint && yarn format
+      run: npm run lint && npm run format
 
     - name: Verify TypeScript types
-      run: yarn typecheck
+      run: npm run typecheck
 
     - name: Run test coverage
-      run: yarn test:coverage
+      run: npm run test:coverage
 
     - name: Build project
-      run: yarn build
+      run: npm run build
 
     # - name: Create release
     #   id: create_release
