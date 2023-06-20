@@ -24,7 +24,8 @@
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\" --fix",
     "predeploy": "cd example && yarn install && yarn run build",
     "format": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
-    "typecheck": "tsc --noEmit --declaration false"
+    "typecheck": "tsc --noEmit --declaration false",
+    "version:minor": "npm version minor"
   },
   "dependencies": {
     "@types/d3-drag": "^3.0.2",
@@ -65,6 +66,7 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-standard": "^5.0.0",
+    "husky": "^8.0.3",
     "jest": "^29.5.0",
     "jest-canvas-mock": "^2.5.0",
     "jest-environment-jsdom": "^29.5.0",
@@ -85,5 +87,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "post-merge": "npm run version:minor"
+    }
   }
 }
