@@ -1,0 +1,46 @@
+name: NPM Version Bump
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  npm_version_bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR labels
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            const isMerged = pr.merged === true;
+            const hasLabels = pr.labels.length > 0;
+
+            if (isMerged && hasLabels) {
+              console.log('PR was merged and has labels');
+
+              const labels = pr.labels.map((label) => label.name);
+              const hasVersionLabel = labels.some((label) => label.startsWith('version/'));
+
+              if (hasVersionLabel) {
+                console.log('PR has version label');
+
+                const versionLabel = labels.find((label) => label.startsWith('version/'));
+                const version = versionLabel.split('/')[1];
+
+                console.log('New version:', version);
+
+                const currentPackageJson = fs.readFileSync('package.json', 'utf8');
+                const updatedPackageJson = currentPackageJson.replace(/"version": "[0-9]+\.[0-9]+\.[0-9]+"/, `"version": "${version}"`);
+
+                fs.writeFileSync('package.json', updatedPackageJson);
+
+                console.log('Updated package.json with new version');
+              } else {
+                console.log('PR does not have version label');
+              }
+            } else {
+              console.log('PR was not merged or does not have labels');
+            }

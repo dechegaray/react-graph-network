@@ -24,8 +24,7 @@
     "lint": "eslint \"{**/*,*}.{js,ts,jsx,tsx}\" --fix",
     "predeploy": "cd example && yarn install && yarn run build",
     "format": "prettier --write \"{src,tests,example/src}/**/*.{js,ts,jsx,tsx}\"",
-    "typecheck": "tsc --noEmit --declaration false",
-    "version:minor": "npm version minor"
+    "typecheck": "tsc --noEmit --declaration false"
   },
   "dependencies": {
     "@types/d3-drag": "^3.0.2",
@@ -87,10 +86,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "post-merge": "npm run version:minor"
-    }
   }
 }
