@@ -1,11 +1,16 @@
 name: NPM Version Bump
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
     types:
       - closed
     branches:
       - 'master'
+
+#const isMerged = pr.merged === true;
 
 jobs:
   npm_version_bump:
@@ -16,25 +21,24 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const childProcess = require('child_process');
             const pr = context.payload.pull_request;
-            const isMerged = pr.merged === true;
+            const isMerged = true;
             const hasLabels = pr.labels.length > 0;
 
             if (isMerged && hasLabels) {
               console.log('PR was merged and has labels');
-              const supportedLabels = ['minor', 'patch', 'major']
+              const supportedLabels = ['minor', 'patch', 'major'];
               
               const labels = pr.labels.map((label) => label.name);
               const versionLabel = labels.find((label) => supportedLabels.includes(label));
 
               if (!!versionLabel) {
                 console.log('PR has version label');
-                const versionType = versionLabel === 'minor' ? 'minor' : versionLabel === 'patch' ? 'patch' : 'major';
-                const cmd = `npm version ${versionType}`;
+                const cmd = `npm version ${versionLabel}`;
                 console.log('Running command:', cmd);
 
-                const { execSync } = require('child_process');
-                execSync(cmd, { stdio: 'inherit' });
+                childProcess.execSync(cmd, { stdio: 'inherit' });
 
                 console.log('Package version bumped');
               } else {
