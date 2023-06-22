@@ -2,12 +2,10 @@ name: NPM Version Bump
 
 on:
   pull_request:
-    # types:
-    #   - closed
+    types:
+      - closed
     branches:
       - 'master'
-
-# const isMerged = pr.merged === true;
 
 jobs:
   npm_version_bump:
@@ -18,9 +16,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const fs = require('fs');
             const pr = context.payload.pull_request;
-            const isMerged = true;
+            const isMerged = pr.merged === true;
             const hasLabels = pr.labels.length > 0;
 
             if (isMerged && hasLabels) {
@@ -32,35 +29,15 @@ jobs:
 
               if (!!versionLabel) {
                 console.log('PR has version label');
+                const versionType = versionLabel === 'minor' ? 'minor' : versionLabel === 'patch' ? 'patch' : 'major';
+                const cmd = `npm version ${versionType}`;
+                console.log('Running command:', cmd);
 
-                const currentPackageJson = fs.readFileSync('package.json', 'utf8');
-                const currentVersion = JSON.parse(currentPackageJson).version
-                const versions = JSON.parse(currentPackageJson).version.split('.')
+                // Запускаємо команду npm version для зміни версії пакета
+                const { execSync } = require('child_process');
+                execSync(cmd, { stdio: 'inherit' });
 
-                const major = parseInt(versions[0])
-                const patch = parseInt(versions[1])
-                const minor = parseInt(versions[2])
-                  
-                let parsedVersion = []
-                switch (versionLabel) {
-                  case 'minor':
-                    parsedVersion = [major, patch, minor+1];
-                    break;
-                  case 'patch':
-                    parsedVersion = [major, patch+1, minor];
-                    break;
-                  case 'major':
-                    parsedVersion = [major+1, patch, minor];
-                    break;
-                }
-
-                const newVersion = parsedVersion.join('.')
-                console.log('New version:', newVersion);
-                
-                const updatedPackageJson = currentPackageJson.replace(/"version": "[0-9]+\.[0-9]+\.[0-9]+"/, `"version": "${newVersion}"`);
-                fs.writeFileSync('package.json', updatedPackageJson);
-
-                console.log('Updated package.json with new version');
+                console.log('Package version bumped');
               } else {
                 console.log('PR does not have version label. Skipping version update');
               }
