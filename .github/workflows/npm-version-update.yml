@@ -2,10 +2,12 @@ name: NPM Version Bump
 
 on:
   pull_request:
-    types:
-      - closed
+    # types:
+    #   - closed
     branches:
       - 'master'
+
+# const isMerged = pr.merged === true;
 
 jobs:
   npm_version_bump:
@@ -16,8 +18,9 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const fs = require('fs');
             const pr = context.payload.pull_request;
-            const isMerged = pr.merged === true;
+            const isMerged = true;
             const hasLabels = pr.labels.length > 0;
 
             if (isMerged && hasLabels) {
