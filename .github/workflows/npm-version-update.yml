@@ -1,0 +1,66 @@
+name: NPM Version Bump
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - 'master'
+
+jobs:
+  npm_version_bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR labels
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            const isMerged = pr.merged === true;
+            const hasLabels = pr.labels.length > 0;
+
+            if (isMerged && hasLabels) {
+              console.log('PR was merged and has labels');
+              const supportedLabels = ['minor', 'patch', 'major']
+              
+              const labels = pr.labels.map((label) => label.name);
+              const versionLabel = labels.find((label) => supportedLabels.includes(label));
+
+              if (!!versionLabel) {
+                console.log('PR has version label');
+
+                const currentPackageJson = fs.readFileSync('package.json', 'utf8');
+                const currentVersion = JSON.parse(currentPackageJson).version
+                const versions = JSON.parse(currentPackageJson).version.split('.')
+
+                const major = parseInt(versions[0])
+                const patch = parseInt(versions[1])
+                const minor = parseInt(versions[2])
+                  
+                let parsedVersion = []
+                switch (versionLabel) {
+                  case 'minor':
+                    parsedVersion = [major, patch, minor+1];
+                    break;
+                  case 'patch':
+                    parsedVersion = [major, patch+1, minor];
+                    break;
+                  case 'major':
+                    parsedVersion = [major+1, patch, minor];
+                    break;
+                }
+
+                const newVersion = parsedVersion.join('.')
+                console.log('New version:', newVersion);
+                
+                const updatedPackageJson = currentPackageJson.replace(/"version": "[0-9]+\.[0-9]+\.[0-9]+"/, `"version": "${newVersion}"`);
+                fs.writeFileSync('package.json', updatedPackageJson);
+
+                console.log('Updated package.json with new version');
+              } else {
+                console.log('PR does not have version label. Skipping version update');
+              }
+            } else {
+              console.log('PR was not merged or does not have labels. Skipping version update');
+            }
