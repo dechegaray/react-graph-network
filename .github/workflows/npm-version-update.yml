@@ -33,7 +33,6 @@ jobs:
                 const cmd = `npm version ${versionType}`;
                 console.log('Running command:', cmd);
 
-                // Запускаємо команду npm version для зміни версії пакета
                 const { execSync } = require('child_process');
                 execSync(cmd, { stdio: 'inherit' });
 
