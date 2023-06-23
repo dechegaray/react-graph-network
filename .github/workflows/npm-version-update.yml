@@ -35,17 +35,17 @@ jobs:
           echo "PR_LABELS=${{ github.event.pull_request.labels.*.name }}" >> $GITHUB_ENV
           echo "PR_LABELS: ${{ env.PR_LABELS }}"
       - name: Apply version bump (major)
-        if: contains(steps.pr-labels.outputs.PR_LABELS, 'major')
+        if: contains(env.PR_LABELS, 'major')
         run: |
           echo "Applying version bump (major)"
           npm version major
       - name: Apply version bump (minor)
-        if: contains(steps.pr-labels.outputs.PR_LABELS, 'minor')
+        if: contains(env.PR_LABELS, 'minor')
         run: |
           echo "Applying version bump (minor)"
           npm version minor
       - name: Apply version bump (patch)
-        if: contains(steps.pr-labels.outputs.PR_LABELS, 'patch')
+        if: contains(env.PR_LABELS, 'patch')
         run: |
           echo "Applying version bump (patch)"
           npm version patch
