@@ -4,12 +4,15 @@ on:
       branches:
         - '*'
   pull_request:
+    # branches:
+    #   - master
     types:
       - closed
 jobs:
   merge_pr:
     name: 'PR Merged'
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
