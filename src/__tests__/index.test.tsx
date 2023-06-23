@@ -1,7 +1,15 @@
 import React from 'react'
-import { render, screen, prettyDOM, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 
-import { NetworkGraph, BaseLink, BaseNode, Data, NodeComponentProps, LinkComponentProps } from '..'
+import {
+  NetworkGraph,
+  BaseLink,
+  BaseNode,
+  Data,
+  NodeComponentProps,
+  LinkComponentProps,
+  DetailsComponentProps,
+} from '..'
 
 interface Node extends BaseNode {
   label: string
@@ -44,7 +52,7 @@ describe('NetworkGraph', () => {
     )
   }
 
-  it('The graph renders with the right number of nodes and links', () => {
+  it('the graph renders with the right number of nodes and links', () => {
     render(
       <div style={{ height: 300 }}>
         <NetworkGraph data={mockedData} id='network-graph' />
@@ -55,7 +63,7 @@ describe('NetworkGraph', () => {
     expect(screen.getAllByTestId('link')).toHaveLength(4)
   })
 
-  it('The graph renders the default node and default link', () => {
+  it('the graph renders the default node and default link', () => {
     render(
       <div style={{ height: 300 }}>
         <NetworkGraph data={mockedData} id='network-graph' />
@@ -66,7 +74,7 @@ describe('NetworkGraph', () => {
     expect(screen.getAllByTestId('link').length).toBeGreaterThan(0)
   })
 
-  it('The graph renders custom nodes and links', () => {
+  it('the graph renders custom nodes and links', () => {
     render(
       <div style={{ height: 300 }}>
         <NetworkGraph
@@ -100,7 +108,7 @@ describe('NetworkGraph', () => {
     expect(handleNodeClick).toHaveBeenCalled()
   })
 
-  // it('when hovering over a node, the opacity of other nodes changes', () => {
+  // it.only('when hovering over a node, the opacity of other nodes changes', () => {
   //   render(
   //     <div style={{ height: 300 }}>
   //       <NetworkGraph
@@ -113,24 +121,81 @@ describe('NetworkGraph', () => {
   //     </div>,
   //   )
 
-  //   const text1Node = screen.getByText('Node 1')
-  //   const otherNodes = screen.queryAllByTestId('custom-node-text').filter((el) => el !== text1Node)
+  //   const firstNode = screen.getAllByTestId('custom-node')[0]
+  //   const secondNode = screen.getAllByTestId('custom-node')[1]
 
-  //   fireEvent.mouseOver(screen.getAllByTestId('custom-node')[0])
-  //   // console.log(screen.getByText('Node 2').parentElement?.style)
-  //   expect(screen.getByText('Node 2').parentElement).toHaveStyle('opacity: 0.1')
-
-  //   // await waitFor(() => {
-  //   //   otherNodes.forEach((customNode) => {
-  //   //     console.log(customNode.parentElement?.style)
-  //   //     expect(customNode.parentNode)
-  //   //   })
-  //   // })
-
-  //   // otherNodes.forEach((customNode) => {
-  //   //   console.log(customNode)
-  //   //   expect(customNode.parentNode).toHaveStyle('opacity: 0.1')
-  //   // })
-  //   // expect(screen.getByText('Node 2')).toHaveStyle('opacity: 0.1')
+  //   fireEvent.mouseOver(firstNode)
+  //   expect(secondNode).toHaveStyle('opacity: 0.1')
   // })
+
+  it('renders a detail component when clicking over a node', () => {
+    const CustomNodeComponent = (props: NodeComponentProps<Node>) => {
+      return (
+        <g data-testid='custom-node' onClick={props.selectNode}>
+          <circle r={15} fill={'green'} />
+          <text
+            data-testid='custom-node-text'
+            style={{
+              color: props.isActive ? 'red' : 'green',
+            }}
+            x={20}
+            y={5}
+            onClick={props.onClick}
+          >
+            {props.node.label}
+          </text>
+        </g>
+      )
+    }
+
+    const ObjectDetails = ({ node, unselectNode }: DetailsComponentProps<Node>) => {
+      return (
+        <div role='dialog' className='object-details-wrapper' style={{ maxHeight: 600 - 40 }}>
+          <div className='card'>
+            <div className='card-header'>
+              <h6>{`Details of "${node.label}"`}</h6>
+              <button
+                title='Close panel'
+                data-testid='close-btn'
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  unselectNode()
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    render(
+      <div style={{ height: 300 }}>
+        <NetworkGraph
+          data={mockedData}
+          id='network-graph'
+          NodeComponent={CustomNodeComponent}
+          LinkComponent={CustomLinkComponent}
+          DetailsComponent={ObjectDetails}
+        />
+      </div>,
+    )
+
+    const node1Label = 'Node 1'
+
+    // active state is disabled until node was clicked
+    expect(screen.getByText(node1Label)).toHaveStyle('color: green')
+
+    // verify that details component was rendered with right data
+    fireEvent.click(screen.getByText(node1Label))
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+    expect(screen.getByRole('dialog')).toHaveTextContent(`Details of "${node1Label}"`)
+
+    // node active state is enabled
+    expect(screen.getByText(node1Label)).toHaveStyle('color: red')
+
+    // close details component by triggering |unselectNode|
+    fireEvent.click(screen.getByTitle('Close panel'))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
 })
