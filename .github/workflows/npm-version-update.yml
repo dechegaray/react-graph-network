@@ -32,17 +32,14 @@ jobs:
       - name: Get PR labels
         id: pr-labels
         run: echo "PR_LABELS=${{ github.event.pull_request.labels.*.name }}" >> $GITHUB_ENV
-
       - name: Apply version bump (major)
-        if: contains(env.PR_LABELS, 'major')
+        if: contains(steps.pr-labels.outputs.PR_LABELS, 'major')
         run: npm version major
-
       - name: Apply version bump (minor)
-        if: contains(env.PR_LABELS, 'minor')
+        if: contains(steps.pr-labels.outputs.PR_LABELS, 'minor')
         run: npm version minor
-
       - name: Apply version bump (patch)
-        if: contains(env.PR_LABELS, 'patch')
+        if: contains(steps.pr-labels.outputs.PR_LABELS, 'patch')
         run: npm version patch
       - name: Git push version bump
         run: git push origin ${{ env.BRANCH_NAME }} --follow-tags --force
