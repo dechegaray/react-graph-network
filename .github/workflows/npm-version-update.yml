@@ -6,8 +6,6 @@ on:
   pull_request:
     branches:
       - master
-    # types:
-    #   - closed
 jobs:
   merge_pr:
     name: 'PR Merged'
