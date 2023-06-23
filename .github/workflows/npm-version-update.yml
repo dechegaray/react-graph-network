@@ -29,14 +29,20 @@ jobs:
       - name: Get current branch name
         id: branch-name
         run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+      - name: Get PR labels
+        id: pr-labels
+        run: echo "PR_LABELS=${{ github.event.pull_request.labels.*.name }}" >> $GITHUB_ENV
+
       - name: Apply version bump (major)
-        if: contains(github.event.pull_request.labels.*.name, 'major')
+        if: contains(env.PR_LABELS, 'major')
         run: npm version major
+
       - name: Apply version bump (minor)
-        if: contains(github.event.pull_request.labels.*.name, 'minor')
+        if: contains(env.PR_LABELS, 'minor')
         run: npm version minor
+
       - name: Apply version bump (patch)
-        if: contains(github.event.pull_request.labels.*.name, 'patch')
+        if: contains(env.PR_LABELS, 'patch')
         run: npm version patch
       - name: Git push version bump
         run: git push origin ${{ env.BRANCH_NAME }} --follow-tags --force
