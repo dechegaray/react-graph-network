@@ -33,7 +33,7 @@ jobs:
         id: pr-labels
         run: |
           echo "PR_LABELS=${{ github.event.pull_request.labels.*.name }}" >> $GITHUB_ENV
-          echo "PR_LABELS: ${{ steps.pr-labels.outputs.PR_LABELS }}"
+          echo "PR_LABELS: ${{ env.PR_LABELS }}"
       - name: Apply version bump (major)
         if: contains(steps.pr-labels.outputs.PR_LABELS, 'major')
         run: |
