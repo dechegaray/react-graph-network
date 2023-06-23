@@ -1,45 +1,38 @@
-name: NPM Version Bump
-
+name: 'Dev - PR Close'
 on:
   pull_request:
+    branches:
+      - master
     types:
       - closed
-    branches:
-      - 'master'
-
 jobs:
-  npm_version_bump:
+  merge_pr:
+    name: 'PR Merged'
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR labels
-        uses: actions/github-script@v4
+      - uses: actions/checkout@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const pr = context.payload.pull_request;
-            const isMerged = pr.merged === true;
-            const hasLabels = pr.labels.length > 0;
-
-            if (isMerged && hasLabels) {
-              console.log('PR was merged and has labels');
-              const supportedLabels = ['minor', 'patch', 'major']
-              
-              const labels = pr.labels.map((label) => label.name);
-              const versionLabel = labels.find((label) => supportedLabels.includes(label));
-
-              if (!!versionLabel) {
-                console.log('PR has version label');
-                const versionType = versionLabel === 'minor' ? 'minor' : versionLabel === 'patch' ? 'patch' : 'major';
-                const cmd = `npm version ${versionType}`;
-                console.log('Running command:', cmd);
-
-                const { execSync } = require('child_process');
-                execSync(cmd, { stdio: 'inherit' });
-
-                console.log('Package version bumped');
-              } else {
-                console.log('PR does not have version label. Skipping version update');
-              }
-            } else {
-              console.log('PR was not merged or does not have labels. Skipping version update');
-            }
+          token: ${{ secrets.GH_ORG_PAT }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          cache: 'npm'
+      - name: Git config
+        run: |
+          git config --global user.email "${{ secrets.GH_ORG_EMAIL }}"
+          git config --global user.name "${{ secrets.GH_ORG_NAME }}"
+      - name: Apply version bump (major)
+        if: contains(github.event.pull_request.labels.*.name, 'major')
+        run: npm version major
+      - name: Apply version bump (minor)
+        if: contains(github.event.pull_request.labels.*.name, 'minor')
+        run: npm version minor
+      - name: Apply version bump (patch)
+        if: contains(github.event.pull_request.labels.*.name, 'patch')
+        run: npm version patch
+      - name: Git push version bump
+        run: git push origin dev --follow-tags --force
+      - id: set-version
+        name: Output version change
+        run: npm pkg get version
