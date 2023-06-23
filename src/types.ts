@@ -20,6 +20,7 @@ export interface Data<Node extends BaseNode, Link extends BaseLink<Node>> {
 export interface NodeComponentProps<Node extends BaseNode> {
   node: Node
   isActive: boolean
+  onClick?(e: any): void
   selectNode(): void
 }
 

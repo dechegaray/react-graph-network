@@ -9,8 +9,8 @@ import { addDrag } from './helpers/add-drag'
 import { findNodeBranchFactory } from './helpers/find-node-branch'
 import { addHoverFocus, focusClear, focusNodes } from './helpers/focus-branch'
 
-const DefaultNode = () => <circle fill='black' r={10} className='_graphNode' />
-const DefaultLink = () => <line stroke='grey' className='_graphLine' />
+const DefaultNode = () => <circle fill='black' r={10} className='_graphNode' data-testid='node' />
+const DefaultLink = () => <line stroke='grey' className='_graphLine' data-testid='link' />
 
 export const Graph = <Node extends BaseNode, Link extends BaseLink<Node>>({
   data,
