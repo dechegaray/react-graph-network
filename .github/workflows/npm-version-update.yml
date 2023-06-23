@@ -28,7 +28,7 @@ jobs:
           git config --global user.name "${{ secrets.GH_ORG_NAME }}"
       - name: Get current branch name
         id: branch-name
-        run: echo "::set-env name=BRANCH_NAME::$(git rev-parse --abbrev-ref HEAD)"
+        run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
       - name: Apply version bump (major)
         if: contains(github.event.pull_request.labels.*.name, 'major')
         run: npm version major
