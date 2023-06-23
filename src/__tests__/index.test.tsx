@@ -108,26 +108,6 @@ describe('NetworkGraph', () => {
     expect(handleNodeClick).toHaveBeenCalled()
   })
 
-  // it.only('when hovering over a node, the opacity of other nodes changes', () => {
-  //   render(
-  //     <div style={{ height: 300 }}>
-  //       <NetworkGraph
-  //         data={mockedData}
-  //         id='network-graph'
-  //         NodeComponent={CustomNodeComponent}
-  //         LinkComponent={CustomLinkComponent}
-  //         hoverOpacity={0.1}
-  //       />
-  //     </div>,
-  //   )
-
-  //   const firstNode = screen.getAllByTestId('custom-node')[0]
-  //   const secondNode = screen.getAllByTestId('custom-node')[1]
-
-  //   fireEvent.mouseOver(firstNode)
-  //   expect(secondNode).toHaveStyle('opacity: 0.1')
-  // })
-
   it('renders a detail component when clicking over a node', () => {
     const CustomNodeComponent = (props: NodeComponentProps<Node>) => {
       return (
@@ -150,21 +130,17 @@ describe('NetworkGraph', () => {
 
     const ObjectDetails = ({ node, unselectNode }: DetailsComponentProps<Node>) => {
       return (
-        <div role='dialog' className='object-details-wrapper' style={{ maxHeight: 600 - 40 }}>
-          <div className='card'>
-            <div className='card-header'>
-              <h6>{`Details of "${node.label}"`}</h6>
-              <button
-                title='Close panel'
-                data-testid='close-btn'
-                onClick={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  unselectNode()
-                }}
-              />
-            </div>
-          </div>
+        <div role='dialog'>
+          <h6>{`Details of "${node.label}"`}</h6>
+          <button
+            title='Close panel'
+            data-testid='close-btn'
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              unselectNode()
+            }}
+          />
         </div>
       )
     }

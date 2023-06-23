@@ -57,7 +57,6 @@ export const MyNetworkGraph = () => {
         nodeDistance={1000}
         LinkComponent={MyLine}
         NodeComponent={MyNode}
-        hoverOpacity={0.1}
       />
     </div>
   )
