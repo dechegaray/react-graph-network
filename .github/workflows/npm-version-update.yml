@@ -1,23 +1,23 @@
-name: 'Dev - PR Close'
+name: 'Bump NPM Version'
 on:
   push:
-      branches:
-        - '*'
+    branches:
+      - '*'
   pull_request:
     # branches:
     #   - master
     types:
       - closed
 jobs:
-  merge_pr:
-    name: 'PR Merged'
+  bump:
+    name: 'Analyze'
     # if: github.event.pull_request.merged == true
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-#         with:
-#           token: ${{ GITHUB_TOKEN }}
+      #         with:
+      #           token: ${{ GITHUB_TOKEN }}
       - uses: actions/setup-node@v2
         with:
           node-version: '16.x'
