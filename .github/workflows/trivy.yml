@@ -1,13 +1,14 @@
-name: Security Scan
+name: Trivy Scan
 
 on:
-  push:
-    branches: [ "master" ]
   pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "*" ]
+    branches:
+      - '*'
+  push:
+    branches:
+      - 'master'
   schedule:
-    - cron: '0 8 * * 1'
+    - cron: '10 16 * * 3'
 
 permissions:
   contents: read
@@ -19,7 +20,8 @@ jobs:
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     name: Build
-    runs-on: "ubuntu-18.04"
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
