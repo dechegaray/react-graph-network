@@ -1,56 +1,44 @@
-name: 'Bump NPM Version'
+name: Update Package Version
+
 on:
-  push:
-    branches:
-      - '*'
   pull_request:
-    # branches:
-    #   - master
     types:
       - closed
+
 jobs:
-  bump:
-    name: 'Analyze'
-    # if: github.event.pull_request.merged == true
-    if: github.event_name == 'push'
+  update_version:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'dev'
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      #         with:
-      #           token: ${{ GITHUB_TOKEN }}
-      - uses: actions/setup-node@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
-          cache: 'npm'
-      - name: Git config
+          node-version: 14
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Update Package Version
         run: |
-          git config --global user.email "${{ secrets.GH_ORG_EMAIL }}"
-          git config --global user.name "${{ secrets.GH_ORG_NAME }}"
-      - name: Get current branch name
-        id: branch-name
-        run: echo "BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
-      - name: Get PR labels
-        id: pr-labels
-        run: |
-          echo "PR_LABELS=${{ github.event.pull_request.labels.*.name }}" >> $GITHUB_ENV
-          echo "PR_LABELS: ${{ env.PR_LABELS }}"
-      - name: Apply version bump (major)
-        if: contains(env.PR_LABELS, 'major')
-        run: |
-          echo "Applying version bump (major)"
-          npm version major
-      - name: Apply version bump (minor)
-        if: contains(env.PR_LABELS, 'minor')
-        run: |
-          echo "Applying version bump (minor)"
-          npm version minor
-      - name: Apply version bump (patch)
-        if: contains(env.PR_LABELS, 'patch')
-        run: |
-          echo "Applying version bump (patch)"
-          npm version patch
-      - name: Git push version bump
-        run: git push origin ${{ env.BRANCH_NAME }} --follow-tags --force
-      - id: set-version
-        name: Output version change
-        run: npm pkg get version
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          PR_LABELS=$(jq --raw-output .pull_request.labels[].name "$GITHUB_EVENT_PATH")
+
+          if echo "$PR_LABELS" | grep -qE "(patch|minor|major)"; then
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+
+            NEW_VERSION=$(node -p "require('semver').inc('$CURRENT_VERSION', '$PR_LABELS')")
+
+            npm version $NEW_VERSION
+
+            git config user.name "${{ github.actor }}"
+            git config user.email "${{ github.actor }}@users.noreply.github.com"
+            git add package.json
+            git commit -m "Update package version"
+
+            git tag v$NEW_VERSION
+            git push --follow-tags
+          fi
