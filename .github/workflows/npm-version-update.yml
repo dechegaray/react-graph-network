@@ -34,6 +34,12 @@ jobs:
             CURRENT_VERSION=$(node -p "require('../../package.json').version")
 
             NEW_VERSION=$(node -p "require('semver').inc('$CURRENT_VERSION', '$PR_LABELS')")
+            
+      - name: Debug Current and New Versions
+        run: |
+          echo "Current Version: $CURRENT_VERSION"
+          echo "New Version: $NEW_VERSION"
+          cat package.json
 
             npm version $NEW_VERSION
 
