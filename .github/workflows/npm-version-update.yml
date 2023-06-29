@@ -31,7 +31,7 @@ jobs:
           PR_LABELS=$(jq --raw-output .pull_request.labels[].name "$GITHUB_EVENT_PATH")
 
           if echo "$PR_LABELS" | grep -qE "(patch|minor|major)"; then
-            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            CURRENT_VERSION=$(node -p "require('../../package.json').version")
 
             NEW_VERSION=$(node -p "require('semver').inc('$CURRENT_VERSION', '$PR_LABELS')")
 
