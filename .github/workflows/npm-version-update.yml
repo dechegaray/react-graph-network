@@ -23,7 +23,7 @@ jobs:
         run: rm -f package-lock.json
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install
 
       - name: Update Package Version
         run: |
