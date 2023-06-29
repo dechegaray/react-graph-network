@@ -18,6 +18,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14
+          
+      - name: Delete package-lock.json
+        run: rm -f package-lock.json
 
       - name: Install Dependencies
         run: npm ci
