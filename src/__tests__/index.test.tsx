@@ -170,7 +170,7 @@ describe('NetworkGraph', () => {
     // node active state is enabled
     expect(screen.getByText(node1Label)).toHaveStyle('color: red')
 
-    // close details component by triggering |unselectNode| action
+    // close details component by triggering |unselectNode|
     fireEvent.click(screen.getByTitle('Close panel'))
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
   })
