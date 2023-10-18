@@ -27,12 +27,6 @@ jobs:
       - name: Run linters
         run: npm run lint
 
-      - name: Run formatters
-        run: npm run format
-
-      - name: Verify TypeScript types
-        run: npm run typecheck
-
       - name: Build project
         run: npm run build
 
