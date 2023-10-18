@@ -1,5 +1,4 @@
-import React from 'react'
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Zoom = ({ children }: any) => {
   const zoom = {
     initialTransformMatrix: {},
@@ -13,7 +12,7 @@ export const Zoom = ({ children }: any) => {
     onMouseDown: jest.fn(),
     onMouseMove: jest.fn(),
     onMouseUp: jest.fn(),
-  }
+  };
 
-  return <div data-testid='zoom'>{children(zoom)}</div>
-}
+  return <div data-testid="zoom">{children(zoom)}</div>;
+};
