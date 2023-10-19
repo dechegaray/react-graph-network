@@ -1,16 +1,16 @@
 {
   "name": "@dechegaray/react-graph-network",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/main.es.js",
+      "import": "./dist/main.js",
       "require": "./dist/main.cjs.js"
     }
   },
   "main": "./dist/main.cjs.js",
-  "module": "./dist/main.es.js",
-  "typings": "./dist/main.d.ts",
+  "module": "./dist/main.js",
+  "typings": "./dist/src/main.d.ts",
   "files": [
     "dist"
   ],
