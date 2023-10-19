@@ -1,11 +1,11 @@
-import { findNodeBranchFactory } from '../find-node-branch'
+import { findNodeBranchFactory } from "./find-node-branch";
 
 interface NetworkGraphLink<D = number | string> {
-  source: D
-  target: D
+  source: D;
+  target: D;
 }
 
-describe('find-branch.ts', () => {
+describe("find-branch.ts", () => {
   const data: NetworkGraphLink<{ id: number }>[] = [
     {
       source: {
@@ -271,13 +271,13 @@ describe('find-branch.ts', () => {
         id: 31,
       },
     },
-  ]
+  ];
 
-  const findNodeBranch = findNodeBranchFactory(data)
+  const findNodeBranch = findNodeBranchFactory(data);
   it.each([
     [11, [11, 10, 0, 12, 13]],
     [0, [0]],
-  ])('should branch of %i to be %o', (target, result) => {
-    expect(findNodeBranch(target)).toEqual(result)
-  })
-})
+  ])("should branch of %i to be %o", (target, result) => {
+    expect(findNodeBranch(target)).toEqual(result);
+  });
+});

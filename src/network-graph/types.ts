@@ -9,7 +9,6 @@ export interface BaseNode extends SimulationNodeDatum {
   gForce?: number
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface BaseLink<NodeDatum extends BaseNode> extends SimulationLinkDatum<NodeDatum> {}
 
 export interface Data<Node extends BaseNode, Link extends BaseLink<Node>> {
@@ -20,7 +19,6 @@ export interface Data<Node extends BaseNode, Link extends BaseLink<Node>> {
 export interface NodeComponentProps<Node extends BaseNode> {
   node: Node
   isActive: boolean
-  onClick?(e: any): void
   selectNode(): void
 }
 

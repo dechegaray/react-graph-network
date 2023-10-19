@@ -1,25 +1,29 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
-    "module": "esnext",
-    "target": "ES6",
-    "lib": ["DOM", "ES6", "DOM.Iterable", "ScriptHost", "ES2016.Array.Include", "esnext"],
-    "types": ["node", "jest", "@testing-library/jest-dom"],
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "declaration": true,
-    "strict": false,
-    "noImplicitAny": true,
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
-    "allowJs": true,
-    "baseUrl": "./src",
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "types": ["node", "jest", "@testing-library/jest-dom"]
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "example", "**/__tests__"]
+  "include": ["src", "__mocks__"],
+  "exclude": ["node_modules", "examples", "dist"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
