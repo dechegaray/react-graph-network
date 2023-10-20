@@ -1,24 +1,11 @@
-const esModules = ["jose", "d3", "d3-drag", "d3-force", "d3-selection"].join(
-  "|"
-);
+const esModules = ['jose', 'd3', 'd3-drag', 'd3-force', 'd3-selection'].join('|')
 
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "jsdom",
-  roots: ["<rootDir>"],
-
-  modulePaths: ["<rootDir>/src"],
-  setupFilesAfterEnv: ["<rootDir>/src/setup-tests.ts"],
-
-  collectCoverageFrom: ["<rootDir>/src/**/*.{ts,tsx}"],
-  coverageThreshold: {
-    global: {
-      branches: 0,
-      functions: 0,
-      lines: 0,
-      statements: 0,
-    },
-  },
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom',
+  roots: ['<rootDir>'],
+  setupFilesAfterEnv: ['<rootDir>/src/setup-tests.ts'],
+  collectCoverageFrom: ['<rootDir>/src/**/*.{ts,tsx}'],
 
   transform: {
     /** Note: Given that some third-party modules are not compiled correctly,
@@ -28,8 +15,7 @@ module.exports = {
      * If switching to only babel happens in the future, then change this configuration
      * to only "^.+\\.[jt]sx?$": "babel-jest"
      */
-    "^.+\\.jsx?$": "babel-jest",
-    "^.+\\.tsx?$": "ts-jest",
+    '^.+\\.jsx?$': 'babel-jest',
   },
   transformIgnorePatterns: [
     /** Note: By default `jest` does not transform any file from the folder "node_module";
@@ -44,4 +30,13 @@ module.exports = {
     // "node_modules/(?!(jose|openid-client|@kubernetes))",
     `/node_modules/(?!${esModules})`,
   ],
-};
+
+  coverageThreshold: {
+    global: {
+      branches: 0,
+      functions: 0,
+      lines: 0,
+      statements: 0,
+    },
+  },
+}
