@@ -1,6 +1,6 @@
 {
   "name": "@dechegaray/react-graph-network",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "files": [
     "dist"
   ],
@@ -10,7 +10,8 @@
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "scripts": {
@@ -25,6 +26,8 @@
     "test:coverage": "jest --config jest.config.ts --coverage"
   },
   "peerDependencies": {
+    "@visx/responsive": "^3.3.0",
+    "@visx/zoom": "^3.3.0",
     "react": ">=17",
     "react-dom": ">=17"
   },
@@ -45,8 +48,6 @@
     "@types/react-dom": "^18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
-    "@visx/responsive": "^3.3.0",
-    "@visx/zoom": "^3.3.0",
     "@vitejs/plugin-react": "^4.0.3",
     "babel-jest": "^29.7.0",
     "d3-drag": "^3.0.0",
