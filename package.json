@@ -26,8 +26,6 @@
     "test:coverage": "jest --config jest.config.ts --coverage"
   },
   "peerDependencies": {
-    "@visx/responsive": "^3.3.0",
-    "@visx/zoom": "^3.3.0",
     "react": ">=17",
     "react-dom": ">=17"
   },
