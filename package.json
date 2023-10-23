@@ -26,10 +26,10 @@
     "test:coverage": "jest --config jest.config.ts --coverage"
   },
   "peerDependencies": {
-    "react": ">=17",
-    "react-dom": ">=17",
     "@visx/responsive": "^3.3.0",
-    "@visx/zoom": "^3.3.0"
+    "@visx/zoom": "^3.3.0",
+    "react": ">=17",
+    "react-dom": ">=17"
   },
   "dependencies": {
     "@types/d3-drag": "^3.0.5",
@@ -41,6 +41,9 @@
     "typescript": "^5.0.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.23.2",
+    "@babel/preset-react": "^7.22.15",
+    "@babel/preset-typescript": "^7.23.2",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
